@@ -5,7 +5,9 @@ frontend_ice_type = st.selectbox("Frontend ICE type", ["Empty", "Google STUN", "
 backend_ice_type = st.selectbox("Backend ICE type", ["Empty", "Google STUN", "Twilio TURN"])
 
 if frontend_ice_type == "Empty":
-    frontend_rtc_configuration = {}
+    frontend_rtc_configuration = {
+        "iceServers": []
+    }
 elif frontend_ice_type == "Google STUN":
     frontend_rtc_configuration = {
         "iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]
@@ -19,7 +21,9 @@ elif frontend_ice_type == "Twilio TURN":
     }
 
 if backend_ice_type == "Empty":
-    backend_rtc_configuration = {}
+    backend_rtc_configuration = {
+        "iceServers": []
+    }
 elif backend_ice_type == "Google STUN":
     backend_rtc_configuration = {
         "iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]
