@@ -1,5 +1,5 @@
 import streamlit as st
-from streamlit_webrtc import webrtc_streamer, get_twilio_ice_servers
+from streamlit_webrtc import webrtc_streamer, get_twilio_ice_servers, __version__ as st_webrtc_version
 
 frontend_ice_type = st.selectbox("Frontend ICE type", ["Empty", "Google STUN", "Twilio TURN"])
 backend_ice_type = st.selectbox("Backend ICE type", ["Empty", "Google STUN", "Twilio TURN"])
@@ -45,3 +45,6 @@ webrtc_streamer(
     frontend_rtc_configuration=frontend_rtc_configuration,
     server_rtc_configuration=backend_rtc_configuration,
 )
+
+st.write(f"Streamlit version: {st.__version__}")
+st.write(f"Streamlit-Webrtc version: {st_webrtc_version}")
