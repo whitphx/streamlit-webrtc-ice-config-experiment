@@ -1,8 +1,8 @@
 import streamlit as st
 from streamlit_webrtc import webrtc_streamer, get_hf_ice_servers, get_twilio_ice_servers, __version__ as st_webrtc_version
 
-frontend_ice_type = st.selectbox("Frontend ICE type", ["Empty", "Google STUN", "Twilio TURN", "HF TURN only", "HF TURN and Google STUN"])
-backend_ice_type = st.selectbox("Backend ICE type", ["Empty", "Google STUN", "Twilio TURN", "HF TURN only", "HF TURN and Google STUN"])
+frontend_ice_type = st.selectbox("Frontend ICE type", ["Empty", "Google STUN", "Twilio TURN", "HF TURN only", "HF TURN and Google STUN", "None configured"])
+backend_ice_type = st.selectbox("Backend ICE type", ["Empty", "Google STUN", "Twilio TURN", "HF TURN only", "HF TURN and Google STUN", "None configured"])
 
 if frontend_ice_type == "Empty":
     frontend_rtc_configuration = {
@@ -30,6 +30,8 @@ elif frontend_ice_type == "HF TURN and Google STUN":
     frontend_rtc_configuration = {
         "iceServers": ice_servers
     }
+elif frontend_ice_type == "None configured":
+    frontend_rtc_configuration = None
 
 if backend_ice_type == "Empty":
     backend_rtc_configuration = {
@@ -57,6 +59,8 @@ elif backend_ice_type == "HF TURN and Google STUN":
     backend_rtc_configuration = {
         "iceServers": ice_servers
     }
+elif backend_ice_type == "None configured":
+    backend_rtc_configuration = None
 
 
 st.write("Frontend ICE configuration:", frontend_rtc_configuration)
