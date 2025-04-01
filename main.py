@@ -1,8 +1,12 @@
 import streamlit as st
 from streamlit_webrtc import webrtc_streamer, get_hf_ice_servers, get_twilio_ice_servers, __version__ as st_webrtc_version
+import aiortc
 
-frontend_ice_type = st.selectbox("Frontend ICE type", ["Empty", "Google STUN", "Twilio TURN", "HF TURN only", "HF TURN and Google STUN", "None configured"])
-backend_ice_type = st.selectbox("Backend ICE type", ["Empty", "Google STUN", "Twilio TURN", "HF TURN only", "HF TURN and Google STUN", "None configured"])
+frontend_ice_type = st.selectbox("Frontend ICE type", ["Empty", "Google STUN", "Twilio STUN/TURN", "Twilio STUN/TURN and Google STUN", "HF TURN only", "HF TURN and Google STUN", "None configured"])
+backend_ice_type = st.selectbox("Backend ICE type", ["Empty", "Google STUN", "Twilio STUN/TURN", "Twilio STUN/TURN and Google STUN", "HF TURN only", "HF TURN and Google STUN", "None configured"])
+
+# google_stun_ice_servers = [{"urls": ["stun:stun.l.google.com:19302"]}]
+google_stun_ice_servers = [{"urls": "stun:stun.l.google.com:19302", "url": "stun:stun.l.google.com:19302"}]
 
 if frontend_ice_type == "Empty":
     frontend_rtc_configuration = {
@@ -10,11 +14,18 @@ if frontend_ice_type == "Empty":
     }
 elif frontend_ice_type == "Google STUN":
     frontend_rtc_configuration = {
-        "iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]
+        "iceServers": google_stun_ice_servers
     }
-elif frontend_ice_type == "Twilio TURN":
+elif frontend_ice_type == "Twilio STUN/TURN":
     frontend_rtc_configuration = {
         "iceServers": get_twilio_ice_servers(
+            twilio_sid=st.secrets["TWILIO_ACCOUNT_SID"],
+            twilio_token=st.secrets["TWILIO_AUTH_TOKEN"],
+        )
+    }
+elif frontend_ice_type == "Twilio STUN/TURN and Google STUN":
+    frontend_rtc_configuration = {
+        "iceServers": google_stun_ice_servers + get_twilio_ice_servers(
             twilio_sid=st.secrets["TWILIO_ACCOUNT_SID"],
             twilio_token=st.secrets["TWILIO_AUTH_TOKEN"],
         )
@@ -26,7 +37,7 @@ elif frontend_ice_type == "HF TURN only":
     }
 elif frontend_ice_type == "HF TURN and Google STUN":
     hf_ice_servers = get_hf_ice_servers(token=st.secrets["HF_TOKEN"])
-    ice_servers = hf_ice_servers + [{"urls": ["stun:stun.l.google.com:19302"]}]
+    ice_servers = hf_ice_servers + google_stun_ice_servers
     frontend_rtc_configuration = {
         "iceServers": ice_servers
     }
@@ -39,14 +50,21 @@ if backend_ice_type == "Empty":
     }
 elif backend_ice_type == "Google STUN":
     backend_rtc_configuration = {
-        "iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]
+        "iceServers": google_stun_ice_servers
     }
-elif backend_ice_type == "Twilio TURN":
+elif backend_ice_type == "Twilio STUN/TURN":
     backend_rtc_configuration = {
         "iceServers": get_twilio_ice_servers(
             twilio_sid=st.secrets["TWILIO_ACCOUNT_SID"],
             twilio_token=st.secrets["TWILIO_AUTH_TOKEN"],
         )
+    }
+elif backend_ice_type == "Twilio STUN/TURN and Google STUN":
+    backend_rtc_configuration = {
+        "iceServers": google_stun_ice_servers + get_twilio_ice_servers(
+            twilio_sid=st.secrets["TWILIO_ACCOUNT_SID"],
+            twilio_token=st.secrets["TWILIO_AUTH_TOKEN"],
+        ) + google_stun_ice_servers
     }
 elif backend_ice_type == "HF TURN only":
     hf_ice_servers = get_hf_ice_servers(token=st.secrets["HF_TOKEN"])
@@ -55,7 +73,7 @@ elif backend_ice_type == "HF TURN only":
     }
 elif backend_ice_type == "HF TURN and Google STUN":
     hf_ice_servers = get_hf_ice_servers(token=st.secrets["HF_TOKEN"])
-    ice_servers = hf_ice_servers + [{"urls": ["stun:stun.l.google.com:19302"]}]
+    ice_servers = hf_ice_servers + google_stun_ice_servers
     backend_rtc_configuration = {
         "iceServers": ice_servers
     }
@@ -74,4 +92,5 @@ webrtc_streamer(
 )
 
 st.write(f"Streamlit version: {st.__version__}")
-st.write(f"Streamlit-Webrtc version: {st_webrtc_version}")
+st.write(f"Streamlit-WebRTC version: {st_webrtc_version}")
+st.write(f"aiortc version: {aiortc.__version__}")
