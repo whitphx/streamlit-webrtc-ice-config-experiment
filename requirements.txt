@@ -1,3 +1,3 @@
 streamlit>=1.43.2
-https://38534b87.streamlit-webrtc-hosting.pages.dev/streamlit_webrtc-0.55.1.dev10+g16ac165-py3-none-any.whl
+https://60d84e39.streamlit-webrtc-hosting.pages.dev/streamlit_webrtc-0.55.1.dev13+gdba4736-py3-none-any.whl
 twilio>=9.5.0
