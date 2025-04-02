@@ -6,9 +6,6 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "streamlit>=1.43.2",
-    "streamlit-webrtc>=0.55.0",
+    "streamlit-webrtc>=0.56.0",
     "twilio>=9.5.0",
 ]
-
-[tool.uv.sources]
-streamlit-webrtc = { url = "https://e0fd22d9.streamlit-webrtc-hosting.pages.dev/streamlit_webrtc-0.55.1.dev14+g820d4bf-py3-none-any.whl" }
