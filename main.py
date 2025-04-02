@@ -5,6 +5,13 @@ import aiortc
 frontend_ice_type = st.selectbox("Frontend ICE type", ["Empty", "Google STUN", "Twilio STUN/TURN", "Twilio STUN/TURN and Google STUN", "HF TURN only", "HF TURN and Google STUN", "None configured"])
 backend_ice_type = st.selectbox("Backend ICE type", ["Empty", "Google STUN", "Twilio STUN/TURN", "Twilio STUN/TURN and Google STUN", "HF TURN only", "HF TURN and Google STUN", "None configured"])
 
+@st.cache_data
+def cached_get_twilio_ice_servers():
+    return get_twilio_ice_servers(
+        twilio_sid=st.secrets["TWILIO_ACCOUNT_SID"],
+        twilio_token=st.secrets["TWILIO_AUTH_TOKEN"],
+    )
+
 # google_stun_ice_servers = [{"urls": ["stun:stun.l.google.com:19302"]}]
 google_stun_ice_servers = [{"urls": "stun:stun.l.google.com:19302", "url": "stun:stun.l.google.com:19302"}]
 
@@ -18,17 +25,11 @@ elif frontend_ice_type == "Google STUN":
     }
 elif frontend_ice_type == "Twilio STUN/TURN":
     frontend_rtc_configuration = {
-        "iceServers": get_twilio_ice_servers(
-            twilio_sid=st.secrets["TWILIO_ACCOUNT_SID"],
-            twilio_token=st.secrets["TWILIO_AUTH_TOKEN"],
-        )
+        "iceServers": cached_get_twilio_ice_servers()
     }
 elif frontend_ice_type == "Twilio STUN/TURN and Google STUN":
     frontend_rtc_configuration = {
-        "iceServers": google_stun_ice_servers + get_twilio_ice_servers(
-            twilio_sid=st.secrets["TWILIO_ACCOUNT_SID"],
-            twilio_token=st.secrets["TWILIO_AUTH_TOKEN"],
-        )
+        "iceServers": google_stun_ice_servers + cached_get_twilio_ice_servers()
     }
 elif frontend_ice_type == "HF TURN only":
     hf_ice_servers = get_hf_ice_servers(token=st.secrets["HF_TOKEN"])
@@ -54,17 +55,11 @@ elif backend_ice_type == "Google STUN":
     }
 elif backend_ice_type == "Twilio STUN/TURN":
     backend_rtc_configuration = {
-        "iceServers": get_twilio_ice_servers(
-            twilio_sid=st.secrets["TWILIO_ACCOUNT_SID"],
-            twilio_token=st.secrets["TWILIO_AUTH_TOKEN"],
-        )
+        "iceServers": cached_get_twilio_ice_servers()
     }
 elif backend_ice_type == "Twilio STUN/TURN and Google STUN":
     backend_rtc_configuration = {
-        "iceServers": google_stun_ice_servers + get_twilio_ice_servers(
-            twilio_sid=st.secrets["TWILIO_ACCOUNT_SID"],
-            twilio_token=st.secrets["TWILIO_AUTH_TOKEN"],
-        ) + google_stun_ice_servers
+        "iceServers": google_stun_ice_servers + cached_get_twilio_ice_servers() + google_stun_ice_servers
     }
 elif backend_ice_type == "HF TURN only":
     hf_ice_servers = get_hf_ice_servers(token=st.secrets["HF_TOKEN"])
