@@ -12,6 +12,10 @@ def cached_get_twilio_ice_servers():
         twilio_token=st.secrets["TWILIO_AUTH_TOKEN"],
     )
 
+@st.cache_data
+def cached_get_hf_ice_servers():
+    return get_hf_ice_servers(token=st.secrets["HF_TOKEN"])
+
 # google_stun_ice_servers = [{"urls": ["stun:stun.l.google.com:19302"]}]
 google_stun_ice_servers = [{"urls": "stun:stun.l.google.com:19302", "url": "stun:stun.l.google.com:19302"}]
 
@@ -32,15 +36,12 @@ elif frontend_ice_type == "Twilio STUN/TURN and Google STUN":
         "iceServers": google_stun_ice_servers + cached_get_twilio_ice_servers()
     }
 elif frontend_ice_type == "HF TURN only":
-    hf_ice_servers = get_hf_ice_servers(token=st.secrets["HF_TOKEN"])
     frontend_rtc_configuration = {
-        "iceServers": hf_ice_servers
+        "iceServers": cached_get_hf_ice_servers()
     }
 elif frontend_ice_type == "HF TURN and Google STUN":
-    hf_ice_servers = get_hf_ice_servers(token=st.secrets["HF_TOKEN"])
-    ice_servers = hf_ice_servers + google_stun_ice_servers
     frontend_rtc_configuration = {
-        "iceServers": ice_servers
+        "iceServers": cached_get_hf_ice_servers() + google_stun_ice_servers
     }
 elif frontend_ice_type == "None configured":
     frontend_rtc_configuration = None
@@ -62,18 +63,23 @@ elif backend_ice_type == "Twilio STUN/TURN and Google STUN":
         "iceServers": google_stun_ice_servers + cached_get_twilio_ice_servers() + google_stun_ice_servers
     }
 elif backend_ice_type == "HF TURN only":
-    hf_ice_servers = get_hf_ice_servers(token=st.secrets["HF_TOKEN"])
     backend_rtc_configuration = {
-        "iceServers": hf_ice_servers
+        "iceServers": cached_get_hf_ice_servers()
     }
 elif backend_ice_type == "HF TURN and Google STUN":
-    hf_ice_servers = get_hf_ice_servers(token=st.secrets["HF_TOKEN"])
-    ice_servers = hf_ice_servers + google_stun_ice_servers
     backend_rtc_configuration = {
-        "iceServers": ice_servers
+        "iceServers": cached_get_hf_ice_servers() + google_stun_ice_servers
     }
 elif backend_ice_type == "None configured":
     backend_rtc_configuration = None
+
+
+if st.checkbox("Add invalid TURN server"):
+    backend_rtc_configuration["iceServers"].append({
+        "urls":"turn:gradio-turn.com:80",
+        "username":"non-existing-username",
+        "credential":"non-existing-credential"
+    })
 
 
 st.write("Frontend ICE configuration:", frontend_rtc_configuration)
