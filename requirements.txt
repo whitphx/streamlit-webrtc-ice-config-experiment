@@ -1,4 +1,3 @@
-git+https://github.com/whitphx/aioice.git@turn-connection-timeout
 streamlit==1.43.2
-streamlit_webrtc==0.56.0
+https://b09d39d6.streamlit-webrtc-hosting.pages.dev/streamlit_webrtc-0.57.1.dev3+gfd57e36-py3-none-any.whl
 twilio==9.5.0
