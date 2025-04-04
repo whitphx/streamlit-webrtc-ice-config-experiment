@@ -2,19 +2,29 @@ import streamlit as st
 from streamlit_webrtc import webrtc_streamer, get_hf_ice_servers, get_twilio_ice_servers, __version__ as st_webrtc_version
 import aiortc
 
+import logging
+logging.basicConfig(level=logging.INFO)
+
+aioice_logger = logging.getLogger("aioice")
+aioice_logger.setLevel(logging.DEBUG)
+
+aiortc_logger = logging.getLogger("aiortc")
+aiortc_logger.setLevel(logging.DEBUG)
+aiortc_rtcrtpreceiver_logger = logging.getLogger("aiortc.rtcrtpreceiver")
+aiortc_rtcrtpreceiver_logger.setLevel(logging.INFO)
+aiortc_rtcrtpsender_logger = logging.getLogger("aiortc.rtcrtpsender")
+aiortc_rtcrtpsender_logger.setLevel(logging.INFO)
+
+
 frontend_ice_type = st.selectbox("Frontend ICE type", ["Empty", "Google STUN", "Twilio STUN/TURN", "Twilio STUN/TURN and Google STUN", "HF TURN only", "HF TURN and Google STUN", "None configured"])
 backend_ice_type = st.selectbox("Backend ICE type", ["Empty", "Google STUN", "Twilio STUN/TURN", "Twilio STUN/TURN and Google STUN", "HF TURN only", "HF TURN and Google STUN", "None configured"])
 
-@st.cache_data
-def cached_get_twilio_ice_servers():
-    return get_twilio_ice_servers(
-        twilio_sid=st.secrets["TWILIO_ACCOUNT_SID"],
-        twilio_token=st.secrets["TWILIO_AUTH_TOKEN"],
-    )
+TWILIO_ICE_SERVERS = get_twilio_ice_servers(
+    twilio_sid=st.secrets["TWILIO_ACCOUNT_SID"],
+    twilio_token=st.secrets["TWILIO_AUTH_TOKEN"],
+)
 
-@st.cache_data
-def cached_get_hf_ice_servers():
-    return get_hf_ice_servers(token=st.secrets["HF_TOKEN"])
+HF_ICE_SERVERS = get_hf_ice_servers(token=st.secrets["HF_TOKEN"])
 
 # google_stun_ice_servers = [{"urls": ["stun:stun.l.google.com:19302"]}]
 google_stun_ice_servers = [{"urls": "stun:stun.l.google.com:19302", "url": "stun:stun.l.google.com:19302"}]
@@ -29,19 +39,19 @@ elif frontend_ice_type == "Google STUN":
     }
 elif frontend_ice_type == "Twilio STUN/TURN":
     frontend_rtc_configuration = {
-        "iceServers": cached_get_twilio_ice_servers()
+        "iceServers": TWILIO_ICE_SERVERS
     }
 elif frontend_ice_type == "Twilio STUN/TURN and Google STUN":
     frontend_rtc_configuration = {
-        "iceServers": google_stun_ice_servers + cached_get_twilio_ice_servers()
+        "iceServers": google_stun_ice_servers + TWILIO_ICE_SERVERS
     }
 elif frontend_ice_type == "HF TURN only":
     frontend_rtc_configuration = {
-        "iceServers": cached_get_hf_ice_servers()
+        "iceServers": HF_ICE_SERVERS
     }
 elif frontend_ice_type == "HF TURN and Google STUN":
     frontend_rtc_configuration = {
-        "iceServers": cached_get_hf_ice_servers() + google_stun_ice_servers
+        "iceServers": HF_ICE_SERVERS + google_stun_ice_servers
     }
 elif frontend_ice_type == "None configured":
     frontend_rtc_configuration = None
@@ -56,19 +66,19 @@ elif backend_ice_type == "Google STUN":
     }
 elif backend_ice_type == "Twilio STUN/TURN":
     backend_rtc_configuration = {
-        "iceServers": cached_get_twilio_ice_servers()
+        "iceServers": TWILIO_ICE_SERVERS
     }
 elif backend_ice_type == "Twilio STUN/TURN and Google STUN":
     backend_rtc_configuration = {
-        "iceServers": google_stun_ice_servers + cached_get_twilio_ice_servers() + google_stun_ice_servers
+        "iceServers": google_stun_ice_servers + TWILIO_ICE_SERVERS + google_stun_ice_servers
     }
 elif backend_ice_type == "HF TURN only":
     backend_rtc_configuration = {
-        "iceServers": cached_get_hf_ice_servers()
+        "iceServers": HF_ICE_SERVERS
     }
 elif backend_ice_type == "HF TURN and Google STUN":
     backend_rtc_configuration = {
-        "iceServers": cached_get_hf_ice_servers() + google_stun_ice_servers
+        "iceServers": HF_ICE_SERVERS + google_stun_ice_servers
     }
 elif backend_ice_type == "None configured":
     backend_rtc_configuration = None
