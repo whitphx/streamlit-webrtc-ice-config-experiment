@@ -11,4 +11,4 @@ dependencies = [
 ]
 
 [tool.uv.sources]
-streamlit-webrtc = { url = "https://b09d39d6.streamlit-webrtc-hosting.pages.dev/streamlit_webrtc-0.57.1.dev3+gfd57e36-py3-none-any.whl" }
+streamlit-webrtc = { url = "https://b9eeeed2.streamlit-webrtc-hosting.pages.dev/streamlit_webrtc-0.57.1.dev4+gaccfd9c-py3-none-any.whl" }
