@@ -6,6 +6,6 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "streamlit>=1.43.2",
-    "streamlit-webrtc==0.60.0",
+    "streamlit-webrtc==0.60.3",
     "twilio>=9.5.0",
 ]
