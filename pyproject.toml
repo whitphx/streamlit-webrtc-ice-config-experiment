@@ -13,3 +13,4 @@ dependencies = [
 
 [tool.uv.sources]
 aioice = { git = "https://github.com/jlaine/aioice.git", rev = "turn-improvements" }
+streamlit-webrtc = { url = "https://8fa61e6d.streamlit-webrtc-hosting.pages.dev/streamlit_webrtc-0.61.1.dev5+g9dcb6f5-py3-none-any.whl" }
