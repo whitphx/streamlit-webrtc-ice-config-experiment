@@ -1,3 +1,4 @@
 streamlit==1.43.2
 streamlit-webrtc==0.60.3
 twilio==9.5.0
+git+https://github.com/jlaine/aioice.git@turn-improvements
