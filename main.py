@@ -1,6 +1,7 @@
 import streamlit as st
 from streamlit_webrtc import webrtc_streamer, get_hf_ice_servers, get_twilio_ice_servers, __version__ as st_webrtc_version
 import aiortc
+import aioice
 
 import logging
 logging.basicConfig(level=logging.INFO)
@@ -110,3 +111,4 @@ webrtc_streamer(
 st.write(f"Streamlit version: {st.__version__}")
 st.write(f"Streamlit-WebRTC version: {st_webrtc_version}")
 st.write(f"aiortc version: {aiortc.__version__}")
+st.write(f"aioice version: {aioice.__version__}")
