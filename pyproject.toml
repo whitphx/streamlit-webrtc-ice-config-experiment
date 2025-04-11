@@ -5,12 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "aioice",
     "streamlit>=1.43.2",
-    "streamlit-webrtc==0.60.3",
+    "streamlit-webrtc==0.61.3",
     "twilio>=9.5.0",
 ]
-
-[tool.uv.sources]
-aioice = { git = "https://github.com/jlaine/aioice.git", rev = "turn-improvements" }
-streamlit-webrtc = { url = "https://8fa61e6d.streamlit-webrtc-hosting.pages.dev/streamlit_webrtc-0.61.1.dev5+g9dcb6f5-py3-none-any.whl" }

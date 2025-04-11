@@ -1,4 +1,3 @@
 streamlit==1.43.2
-https://8fa61e6d.streamlit-webrtc-hosting.pages.dev/streamlit_webrtc-0.61.1.dev5+g9dcb6f5-py3-none-any.whl
+streamlit-webrtc==0.61.3
 twilio==9.5.0
-git+https://github.com/jlaine/aioice.git@turn-improvements
