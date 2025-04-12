@@ -10,3 +10,6 @@ dependencies = [
     "twilio>=9.5.0",
     "aioice==0.10.0",
 ]
+
+[tool.uv.sources]
+streamlit-webrtc = { url = "https://c88cb37e.streamlit-webrtc-hosting.pages.dev/streamlit_webrtc-0.62.2.dev5+gcd0ebc1-py3-none-any.whl" }

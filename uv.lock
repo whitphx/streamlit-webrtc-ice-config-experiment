@@ -849,17 +849,24 @@ wheels = [
 
 [[package]]
 name = "streamlit-webrtc"
-version = "0.62.1"
-source = { registry = "https://pypi.org/simple" }
+version = "0.62.2.dev5+gcd0ebc1"
+source = { url = "https://c88cb37e.streamlit-webrtc-hosting.pages.dev/streamlit_webrtc-0.62.2.dev5+gcd0ebc1-py3-none-any.whl" }
 dependencies = [
     { name = "aioice" },
     { name = "aiortc" },
     { name = "packaging" },
     { name = "streamlit" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b1/12/47660610b179ba20bec8e06f39f2e4a8e3ad13c7fc2f8b6e9ec71bf93b25/streamlit_webrtc-0.62.1.tar.gz", hash = "sha256:79096d026a4a49c89fa049d0998f4976a651179678977f0983a78b05d049144b", size = 209912 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c5/91/bc0679ab9098fcda2bff5deff898d04ad45e567c3f1c8958c98a36ec550f/streamlit_webrtc-0.62.1-py3-none-any.whl", hash = "sha256:8b15c16c1753a0ec4f8d4b26d8370a24db3501d0729bb55de08465c5e5c4dc83", size = 217166 },
+    { url = "https://c88cb37e.streamlit-webrtc-hosting.pages.dev/streamlit_webrtc-0.62.2.dev5+gcd0ebc1-py3-none-any.whl", hash = "sha256:bb3d9848559ca2e44ca0636031bb9bb37b8bd27dedde556b67c735d102fbbadb" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "aioice", specifier = ">=0.10.0" },
+    { name = "aiortc", specifier = ">=1.11.0" },
+    { name = "packaging", specifier = ">=20.0" },
+    { name = "streamlit", specifier = ">=0.89.0" },
 ]
 
 [[package]]
@@ -877,7 +884,7 @@ dependencies = [
 requires-dist = [
     { name = "aioice", specifier = "==0.10.0" },
     { name = "streamlit", specifier = ">=1.43.2" },
-    { name = "streamlit-webrtc", specifier = "==0.62.1" },
+    { name = "streamlit-webrtc", url = "https://c88cb37e.streamlit-webrtc-hosting.pages.dev/streamlit_webrtc-0.62.2.dev5+gcd0ebc1-py3-none-any.whl" },
     { name = "twilio", specifier = ">=9.5.0" },
 ]
 
