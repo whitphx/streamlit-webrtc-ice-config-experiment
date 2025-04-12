@@ -849,8 +849,8 @@ wheels = [
 
 [[package]]
 name = "streamlit-webrtc"
-version = "0.62.2.dev5+gcd0ebc1"
-source = { url = "https://c88cb37e.streamlit-webrtc-hosting.pages.dev/streamlit_webrtc-0.62.2.dev5+gcd0ebc1-py3-none-any.whl" }
+version = "0.62.3.dev5+g0d6acc6"
+source = { url = "https://1229f38b.streamlit-webrtc-hosting.pages.dev/streamlit_webrtc-0.62.3.dev5+g0d6acc6-py3-none-any.whl" }
 dependencies = [
     { name = "aioice" },
     { name = "aiortc" },
@@ -858,7 +858,7 @@ dependencies = [
     { name = "streamlit" },
 ]
 wheels = [
-    { url = "https://c88cb37e.streamlit-webrtc-hosting.pages.dev/streamlit_webrtc-0.62.2.dev5+gcd0ebc1-py3-none-any.whl", hash = "sha256:bb3d9848559ca2e44ca0636031bb9bb37b8bd27dedde556b67c735d102fbbadb" },
+    { url = "https://1229f38b.streamlit-webrtc-hosting.pages.dev/streamlit_webrtc-0.62.3.dev5+g0d6acc6-py3-none-any.whl", hash = "sha256:7d95ad22e2d1dddd690d01e3221d1ac753e1fe0e3b673d1a4388e3ff9c8f862b" },
 ]
 
 [package.metadata]
@@ -884,7 +884,7 @@ dependencies = [
 requires-dist = [
     { name = "aioice", specifier = "==0.10.0" },
     { name = "streamlit", specifier = ">=1.43.2" },
-    { name = "streamlit-webrtc", url = "https://c88cb37e.streamlit-webrtc-hosting.pages.dev/streamlit_webrtc-0.62.2.dev5+gcd0ebc1-py3-none-any.whl" },
+    { name = "streamlit-webrtc", url = "https://1229f38b.streamlit-webrtc-hosting.pages.dev/streamlit_webrtc-0.62.3.dev5+g0d6acc6-py3-none-any.whl" },
     { name = "twilio", specifier = ">=9.5.0" },
 ]
 
